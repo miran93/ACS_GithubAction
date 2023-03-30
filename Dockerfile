@@ -3,6 +3,7 @@ WORKDIR /app
 COPY ./package.json ./
 RUN npm install
 COPY . .
+RUN npm i -g @nestjs/cli
 RUN npm start 
 RUN ng build
 
