@@ -17,25 +17,25 @@ jobs:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
         - name: 'Create Azure Registery'
-          run: az acr create --resource-group TestGroup --name testgroupregistry --sku Basic
+          run: az acr create --resource-group MiranDemo --name MiranDemoregistry --sku Basic
         
         - name: 'Build & Push'
           uses: azure/docker-login@v1
           with:
-            login-server: testgroupregistry.azurecr.io
+            login-server: MiranDemoregistry.azurecr.io
             username: ${{ secrets.AZURE_USERNAME }}
             password: ${{ secrets.AZURE_PASSWORD }}
         - run: |
             docker build . -t hello-world:${{ github.sha }}
-            docker tag hello-world:${{ github.sha }} testgroupregistry.azurecr.io/samples/hello-world:${{ github.sha }}
-            docker push testgroupregistry.azurecr.io/samples/hello-world:${{ github.sha }}
+            docker tag hello-world:${{ github.sha }} MiranDemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
+            docker push MiranDemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
 
         - name: 'Deploy to Azure Container Instances'
           uses: 'azure/aci-deploy@v1'
           with:
-            resource-group: TestGroup
+            resource-group: MiranDemo
             dns-name-label: helloworlddevtest
-            image: testgroupregistry.azurecr.io/samples/hello-world:${{ github.sha }}
+            image: MiranDemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
             cpu: 1
             memory: 1
             registry-username: ${{ secrets.AZURE_USERNAME }}
