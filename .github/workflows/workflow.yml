@@ -20,28 +20,28 @@ jobs:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
 
         - name: 'Create Azure Registery'
-          run: az acr create --resource-group mirangithubdemo --name mirangithubdemoregistry --sku Basic
+          run: az acr create --resource-group mirangithubdemo --name miranmgithubdemoregistry --sku Basic
         
         - name: 'Build & Push'
           uses: azure/docker-login@v1
           with:
-            login-server: mirangithubdemoregistry.azurecr.io
+            login-server: miranmgithubdemoregistry.azurecr.io
             username: ${{ secrets.AZURE_USERNAME }}
             password: ${{ secrets.AZURE_PASSWORD }}
         - run: |
             docker build . -t hello-world:${{ github.sha }}
-            docker tag hello-world:${{ github.sha }} mirangithubdemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
-            docker push mirangithubdemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
+            docker tag hello-world:${{ github.sha }} miranmgithubdemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
+            docker push miranmgithubdemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
 
         - name: 'Deploy to Azure Container Instances'
           uses: 'azure/aci-deploy@v1'
           with:
             resource-group: mirangithubdemo
-            dns-name-label: helloworlddevtest
-            image: mirangithubdemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
+            dns-name-label: helloworldmiran
+            image: miranmgithubdemoregistry.azurecr.io/samples/hello-world:${{ github.sha }}
             cpu: 1
             memory: 1
             registry-username: ${{ secrets.AZURE_USERNAME }}
             registry-password: ${{ secrets.AZURE_PASSWORD }}
-            name: helloworlddev
-            location: 'central india'
+            name: helloworldmiran
+            location: 'East US'
