@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 name: Build & Deploy to ACI
 jobs:
     build-and-deploy:
