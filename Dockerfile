@@ -4,7 +4,7 @@ COPY ./package.json ./
 RUN npm install
 COPY . .
 RUN npm start 
-RUN npm run build
+RUN ng build
 
 FROM node:14-alpine
 WORKDIR /app
